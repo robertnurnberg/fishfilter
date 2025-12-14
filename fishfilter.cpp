@@ -652,12 +652,18 @@ int main(int argc, char const *argv[]) {
   if (cmd.has_argument("--minDepth")) {
     min_depth = std::stoi(cmd.get_argument("--minDepth"));
   }
+  std::cout << "Filtering positions with absEval in [" << abs_eval_min << ","
+            << abs_eval_max << "] and depth >= " << min_depth << "."
+            << std::endl;
 
   bool stop_early = cmd.has_argument("--stopEarly", true);
   if (cmd.has_argument("--countStopEarly")) {
     count_stop_early = std::stoi(cmd.get_argument("--countStopEarly"));
   }
-  if (!stop_early)
+  if (stop_early)
+    std::cout << "Filtering at most " << count_stop_early
+              << " position(s) per game." << std::endl;
+  else
     count_stop_early = std::numeric_limits<decltype(count_stop_early)>::max();
 
   if (cmd.has_argument("-o")) {
